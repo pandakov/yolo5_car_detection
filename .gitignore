@@ -92,6 +92,7 @@ wheels/
 /wandb/
 .installed.cfg
 *.egg
+.vscode/
 
 
 # PyInstaller
