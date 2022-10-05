@@ -8,7 +8,7 @@ This code can detect russian liecense car plates.
 - for using detection script with video stream change 'source' parameter on detection_settings.json
 
 ### Training model
-We build trainnig process for running on Google Colab https://colab.research.google.com/. Use GPU acceleration for fast training.
+We built trainnig process for running on Google Colab https://colab.research.google.com/. Use GPU acceleration for fast training.
 
 - prepare your dataset on Roboflow site https://universe.roboflow.com/
 - copy train.ipynb to Google Colab
@@ -16,3 +16,6 @@ We build trainnig process for running on Google Colab https://colab.research.goo
 - run it with your training parameters
 - copy weights from /content/yolov5/runs/train/yolov5s_results/weights/best.pt to /weigths/best.pt of this repository
 - if you want run detection on Mac with Apple Silicone chips you should run 'python export.py --/weights/best.pt --include coreml'
+
+### Metrics
+Some metrics of training YOLOv5 model you can see below. There are dataset with 519 images downloaded from Roboflow.
