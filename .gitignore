@@ -20,8 +20,9 @@
 *.data
 *.json
 *.cfg
-setup.cfg
+!setup.cfg
 !cfg/yolov3*.cfg
+!metrics/*.png
 
 storage.googleapis.com
 runs/*
