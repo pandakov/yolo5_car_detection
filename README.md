@@ -9,4 +9,5 @@ This code can detect russian liecense car plates.
 
 #### Training model
 We build trainnig process for running on Google Collab https://colab.research.google.com/
+
 For trainnig YOLOv5 model copy train.ipynb to collab and run it.
