@@ -22,8 +22,10 @@ Some metrics of training YOLOv5 model you can see below. There are dataset with 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/pandakov/yolo5_car_detection/blob/master/metrics/metrics_dark.png">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/pandakov/yolo5_car_detection/blob/master/metrics/metrics.png">
+  <img alt="Some training metrics" src="https://github.com/pandakov/yolo5_car_detection/blob/master/metrics/metrics.png">
 </picture>
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/pandakov/yolo5_car_detection/blob/master/metrics/train_dark.png">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/pandakov/yolo5_car_detection/blob/master/metrics/train.png">
+  <img alt="Some training metrics" src="https://github.com/pandakov/yolo5_car_detection/blob/master/metrics/train.png">
 </picture>
