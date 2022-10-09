@@ -262,11 +262,17 @@ def main():
 
 
 def start_easy_ocr():
-    ...
+    reader = easyocr.Reader(['en','ru'])
+    return reader
 
 
 def recognize_text(plate_im) -> str:
-    ...
+    reader = start_easy_ocr()
+    result = reader.readtext(plate_im)
+    ans = []
+    for i in result:
+        ans.append(i[-2])
+    return ' '.join(ans)
 
 
 if __name__ == "__main__":
