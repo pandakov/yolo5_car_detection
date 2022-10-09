@@ -92,8 +92,21 @@ def run(
         "I": "1",
         "l": "1",
         "i": "1",
+        "X": "Х",
+        "A": "А",
+        "O": "О",
+        "P": "Р",
+        "E": "Е",
+        "T": "Т",
+        "H": "Н",
+        "K": "К",
+        "C": "С",
+        "B": "В",
+        "M": "М",
     }
-    nochanger = " 01234567890АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюяXAOPETHKCBMoxpeakc"
+    nochanger = (
+        " 01234567890АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+    )
 
     # Directories
     save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
@@ -307,7 +320,9 @@ def recognize_text(plate_im, reader) -> str:
 
 
 def normalize_text(s: str, symbs: dict, nochange: str) -> str:
-    if len(s) > 0:
+    if len(s) < 6:
+        return ""
+    else:
         for a in s:
             if a in symbs.keys():
                 s = s.replace(a, symbs[a])
