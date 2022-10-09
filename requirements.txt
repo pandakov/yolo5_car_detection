@@ -12,6 +12,7 @@ scipy>=1.4.1
 torch>=1.7.0  # see https://pytorch.org/get-started/locally/ (recommended)
 torchvision>=0.8.1
 tqdm>=4.64.0
+easyocr>=1.6.2
 # protobuf<=3.20.1  # https://github.com/ultralytics/yolov5/issues/8012
 
 # Logging -------------------------------------
@@ -22,9 +23,6 @@ tensorboard>=2.4.1
 # Plotting ------------------------------------
 pandas>=1.1.4
 seaborn>=0.11.0
-
-# OCR -----------------------------------------
-#pytesseract>=0.3.10
 
 # Export --------------------------------------
 coremltools>=6.0  # CoreML export
@@ -67,6 +65,3 @@ flake8-black>=0.3.2
 flake8-expression-complexity>=0.0.11
 flake8-annotations-complexity>=0.0.7
 flake8-requirements>=1.5.3
-
-# Text recognizing
-easyocr>=1.6.2
