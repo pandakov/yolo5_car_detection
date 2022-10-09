@@ -49,7 +49,8 @@ from utils.torch_utils import select_device, smart_inference_mode
 def run(
     weights=ROOT / "weights/best-4.mlmodel",  # model path or triton URL
     # source="https://youtu.be/OZe77bdEYjU",  # file/dir/URL/glob/screen/0(webcam)
-    source="https://youtu.be/oyWNWlnqV_0",  # file/dir/URL/glob/screen/0(webcam)
+    # source="https://youtu.be/oyWNWlnqV_0",  # file/dir/URL/glob/screen/0(webcam)
+    source="https://youtu.be/91sMXyRIw4o",
     data=ROOT / "data/carplate.yaml",  # dataset.yaml path
     imgsz=(640, 640),  # inference size (height, width)
     conf_thres=0.6,  # confidence threshold
@@ -84,6 +85,15 @@ def run(
     screenshot = source.lower().startswith("screen")
     if is_url and is_file:
         source = check_file(source)  # download
+
+    changer = {
+        "Y": "У",
+        "b": "6",
+        "I": "1",
+        "l": "1",
+        "i": "1",
+    }
+    nochanger = " 01234567890АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюяXAOPETHKCBMoxpeakc"
 
     # Directories
     save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
@@ -162,6 +172,7 @@ def run(
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if save_crop else im0  # for save_crop
             annotator = Annotator(im0, line_width=line_thickness, example=str(names))
+            recognized_text = ""
             if len(det):
                 # Rescale boxes from img_size to im0 size
                 det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()
@@ -202,7 +213,12 @@ def run(
                             BGR=True,
                             save=False,
                         )
-                        recognized_text = recognize_text(croped_im, easyocr_reader)
+                        recognized_text = recognize_text(
+                            croped_im, easyocr_reader
+                        ).upper()
+                        recognized_text = normalize_text(
+                            recognized_text, changer, nochanger
+                        )
                         print(recognized_text)
 
             # Stream results
@@ -214,6 +230,16 @@ def run(
                         str(p), cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO
                     )  # allow window resize (Linux)
                     cv2.resizeWindow(str(p), im0.shape[1], im0.shape[0])
+                im0 = cv2.putText(
+                    im0,
+                    recognized_text,
+                    (10, 30),
+                    cv2.FONT_HERSHEY_COMPLEX,
+                    1,
+                    (255, 255, 255),
+                    2,
+                    cv2.LINE_AA,
+                )
                 cv2.imshow(str(p), im0)
                 cv2.waitKey(1)  # 1 millisecond
 
@@ -241,9 +267,9 @@ def run(
                     vid_writer[i].write(im0)
 
         # Print time (inference-only)
-        LOGGER.info(
-            f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms"
-        )
+        # LOGGER.info(
+        #     f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms"
+        # )
 
     # Print results
     t = tuple(x.t / seen * 1e3 for x in dt)  # speeds per image
@@ -278,6 +304,17 @@ def recognize_text(plate_im, reader) -> str:
     for i in result:
         ans.append(i[-2])
     return " ".join(ans)
+
+
+def normalize_text(s: str, symbs: dict, nochange: str) -> str:
+    if len(s) > 0:
+        for a in s:
+            if a in symbs.keys():
+                s = s.replace(a, symbs[a])
+            elif a not in nochange:
+                s = s.replace(a, "")
+        return s
+    return s
 
 
 if __name__ == "__main__":
