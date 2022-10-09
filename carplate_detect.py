@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 import torch
+import easyocr
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -95,6 +96,9 @@ def run(
     model = DetectMultiBackend(weights, device=device, dnn=dnn, data=data, fp16=half)
     stride, names, pt = model.stride, model.names, model.pt
     imgsz = check_img_size(imgsz, s=stride)  # check image size
+
+    # Load EasyOCR
+    easyocr_reader = start_easy_ocr()
 
     # Dataloader
     if webcam:
@@ -198,6 +202,8 @@ def run(
                             BGR=True,
                             save=False,
                         )
+                        recognized_text = recognize_text(croped_im, easyocr_reader)
+                        print(recognized_text)
 
             # Stream results
             im0 = annotator.result()
@@ -262,17 +268,16 @@ def main():
 
 
 def start_easy_ocr():
-    reader = easyocr.Reader(['en','ru'])
+    reader = easyocr.Reader(["en", "ru"])
     return reader
 
 
-def recognize_text(plate_im) -> str:
-    reader = start_easy_ocr()
+def recognize_text(plate_im, reader) -> str:
     result = reader.readtext(plate_im)
     ans = []
     for i in result:
         ans.append(i[-2])
-    return ' '.join(ans)
+    return " ".join(ans)
 
 
 if __name__ == "__main__":
