@@ -89,8 +89,9 @@ def run(
     changer = {
         "Y": "У",
         "b": "6",
+        "Б": "6",
         "I": "1",
-        "l": "1",
+        "L": "1",
         "i": "1",
         "X": "Х",
         "A": "А",
@@ -103,10 +104,10 @@ def run(
         "C": "С",
         "B": "В",
         "M": "М",
+        "Й": "И",
+        "Ё": "Е",
     }
-    nochanger = (
-        " 01234567890АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-    )
+    nochanger = " 01234567890АВЕКМНОРСТУХС"
 
     # Directories
     save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
@@ -226,13 +227,12 @@ def run(
                             BGR=True,
                             save=False,
                         )
-                        recognized_text = recognize_text(
-                            croped_im, easyocr_reader
-                        ).upper()
-                        recognized_text = normalize_text(
-                            recognized_text, changer, nochanger
-                        )
-                        print(recognized_text)
+                        ocr_result = recognize_text(croped_im, easyocr_reader)
+                        if len(ocr_result) > 6:
+                            recognized_text = normalize_text(
+                                ocr_result.upper(), changer, nochanger
+                            )
+                            print(recognized_text)
 
             # Stream results
             im0 = annotator.result()
@@ -316,13 +316,11 @@ def recognize_text(plate_im, reader) -> str:
     ans = []
     for i in result:
         ans.append(i[-2])
-    return " ".join(ans)
+    return " ".join(ans).strip()
 
 
 def normalize_text(s: str, symbs: dict, nochange: str) -> str:
-    if len(s) < 6:
-        return ""
-    else:
+    if len(s) > 0:
         for a in s:
             if a in symbs.keys():
                 s = s.replace(a, symbs[a])
