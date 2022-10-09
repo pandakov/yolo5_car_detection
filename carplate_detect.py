@@ -261,5 +261,13 @@ def main():
     run()
 
 
+def start_easy_ocr():
+    ...
+
+
+def recognize_text(plate_im) -> str:
+    ...
+
+
 if __name__ == "__main__":
     main()
