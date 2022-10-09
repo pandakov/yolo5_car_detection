@@ -48,9 +48,9 @@ from utils.torch_utils import select_device, smart_inference_mode
 @smart_inference_mode()
 def run(
     weights=ROOT / "weights/best-4.mlmodel",  # model path or triton URL
-    # source="https://youtu.be/OZe77bdEYjU",  # file/dir/URL/glob/screen/0(webcam)
+    source="https://youtu.be/OZe77bdEYjU",  # file/dir/URL/glob/screen/0(webcam)
     # source="https://youtu.be/oyWNWlnqV_0",  # file/dir/URL/glob/screen/0(webcam)
-    source="https://youtu.be/91sMXyRIw4o",
+    # source="https://youtu.be/91sMXyRIw4o",
     data=ROOT / "data/carplate.yaml",  # dataset.yaml path
     imgsz=(640, 640),  # inference size (height, width)
     conf_thres=0.6,  # confidence threshold
@@ -228,7 +228,7 @@ def run(
                             save=False,
                         )
                         ocr_result = recognize_text(croped_im, easyocr_reader)
-                        if len(ocr_result) > 6:
+                        if len(ocr_result) > 5:
                             recognized_text = normalize_text(
                                 ocr_result.upper(), changer, nochanger
                             )
