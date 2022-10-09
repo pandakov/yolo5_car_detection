@@ -58,7 +58,7 @@ def run(
     view_img=False,  # show results
     save_txt=False,  # save results to *.txt
     save_conf=False,  # save confidences in --save-txt labels
-    save_crop=False,  # save cropped prediction boxes
+    save_crop=True,  # save cropped prediction boxes
     nosave=True,  # do not save images/videos
     classes=None,  # filter by class: --class 0, or --class 0 2 3
     agnostic_nms=False,  # class-agnostic NMS
@@ -190,11 +190,13 @@ def run(
                         )
                         annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
-                        save_one_box(
+                        croped_im = save_one_box(
                             xyxy,
                             imc,
+                            # pad=0,
                             file=save_dir / "crops" / names[c] / f"{p.stem}.jpg",
                             BGR=True,
+                            save=False,
                         )
 
             # Stream results
