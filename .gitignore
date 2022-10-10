@@ -64,6 +64,7 @@ weights/
 *_openvino_model/
 darknet53.conv.74
 yolov3-tiny.conv.15
+*.pth
 
 # GitHub Python GitIgnore ----------------------------------------------------------------------------------------------
 # Byte-compiled / optimized / DLL files
