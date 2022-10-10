@@ -48,9 +48,9 @@ from utils.torch_utils import select_device, smart_inference_mode
 @smart_inference_mode()
 def run(
     weights=ROOT / "weights/best-4.mlmodel",  # model path or triton URL
-    source="https://youtu.be/OZe77bdEYjU",  # file/dir/URL/glob/screen/0(webcam)
+    # source="https://youtu.be/OZe77bdEYjU",  # file/dir/URL/glob/screen/0(webcam)
     # source="https://youtu.be/oyWNWlnqV_0",  # file/dir/URL/glob/screen/0(webcam)
-    # source="https://youtu.be/91sMXyRIw4o",
+    source="https://youtu.be/91sMXyRIw4o",  # file/dir/URL/glob/screen/0(webcam)
     data=ROOT / "data/carplate.yaml",  # dataset.yaml path
     imgsz=(640, 640),  # inference size (height, width)
     conf_thres=0.6,  # confidence threshold
@@ -307,7 +307,10 @@ def main():
 
 
 def start_easy_ocr():
-    reader = easyocr.Reader(["en", "ru"])
+    # reader = easyocr.Reader(["en", "ru"])
+    reader = easyocr.Reader(["en","ru"],
+                        model_storage_directory='custom_ocr',
+                        user_network_directory='custom_ocr') 
     return reader
 
 
