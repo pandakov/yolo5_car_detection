@@ -1,6 +1,14 @@
 ## YOLOv5 and EasyOCR based car liecense plate detection.
 
 This code can detect russian liecense car plates.
+
+#### Example
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/pandakov/yolo5_car_detection/blob/master/metrics/example.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/pandakov/yolo5_car_detection/blob/master/metrics/example.png">
+  <img alt="Example" src="https://github.com/pandakov/yolo5_car_detection/blob/master/metrics/example.png">
+</picture>
+
 ### Detection
 - run pip install -r requirements.txt to install dependencies
 - put your weights on /weigths/best.pt (on Mac you can use /weigts/best.mlmodel for fast CoreML implementation)
